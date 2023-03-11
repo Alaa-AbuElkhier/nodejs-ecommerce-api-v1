@@ -5,7 +5,7 @@ const categorySchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, 'Category required'],
-      unique: [true, 'Category must be unique'],
+      unique: [true, 'Category must be unique'], //if the name will repeated will send code 11000
       minlength: [3, 'too short category name'],
       maxlength: [32, 'Too long category name'],
     },
