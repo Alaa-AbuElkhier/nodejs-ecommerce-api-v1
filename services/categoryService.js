@@ -18,9 +18,13 @@ exports.getCategories = asyncHandler(async (req, res) => {
   //   .catch((err) => {
   //     res.json(err);
   //   });
+  //create pagination
+  const page = req.query.page * 1 || 1;
+  const limit = req.query.limit * 1 || 5;
+  const skip = (page - 1) * limit; // if we in page number 2---> (2-1)*5 =5 --->then we will skip 5 documents and show the next 5
 
-  const categories = await CategoryModel.find({});
-  res.status(200).json({ result: categories.length, data: categories });
+  const categories = await CategoryModel.find({}).skip(skip).limit(limit);
+  res.status(200).json({ result: categories.length, page, data: categories });
 });
 
 //@desc   Create category
