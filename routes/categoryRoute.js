@@ -2,8 +2,13 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 
-const { getCategories } = require('../services/categoryService');
+const {
+  getCategories,
+  createCategory,
+} = require('../services/categoryService');
 
-app.post('/', getCategories);
+// app.get('/', getCategories);
+//  app.post('/', createCategory);
+router.route('/').get(getCategories).post(createCategory);
 
 module.exports = router;
