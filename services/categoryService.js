@@ -49,3 +49,15 @@ exports.createCategory = asyncHandler(async (req, res) => {
   //   res.status(400).send(err);
   // });
 });
+
+//@desc   Get specific category by id
+//@route  GET /api/vi/categories/:id
+//@access Public
+exports.getCategory = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const category = await CategoryModel.findById(id);
+  if (!category) {
+    res.status(404).json({ msg: `No category for this id ${id}` });
+  }
+  res.status(200).json({ data: category });
+});
