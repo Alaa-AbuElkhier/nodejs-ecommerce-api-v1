@@ -83,7 +83,6 @@ exports.updateCategory = asyncHandler(async (req, res) => {
 //@desc   Delete specific category by id
 //@route  DELETE /api/vi/categories/:id
 //@access Private
-
 exports.deleteCategory = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const category = await CategoryModel.findOneAndDelete(id);
