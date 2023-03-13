@@ -1,4 +1,5 @@
 const express = require('express');
+const { param, validationResult } = require('express-validator');
 const app = express();
 const router = express.Router();
 
@@ -15,7 +16,20 @@ const {
 router.route('/').get(getCategories).post(createCategory);
 router
   .route('/:id')
-  .get(getCategory)
+  .get(
+    //1-rules
+    param('id').isMongoId().withMessage('Invalid category id'),
+
+    //2-middleware =>catch errors from rules if exist
+    (req, res) => {
+      // Finds the validation errors in this request and wraps them in an object with handy functions
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+    },
+    getCategory
+  )
   .put(updateCategory)
   .delete(deleteCategory);
 
