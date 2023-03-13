@@ -8,9 +8,9 @@ const db = () => {
     })
     .then((conn) => {
       console.log(`Database Connected:${conn.connection.host}`);
-    })
-    .catch((err) => {
-      console.error(`Database Error : ${err}`);
     });
+  // .catch((err) => {
+  //   console.error(`Database Error : ${err}`);
+  // });
 };
 module.exports = db;

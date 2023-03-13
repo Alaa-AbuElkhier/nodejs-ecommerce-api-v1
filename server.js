@@ -30,10 +30,20 @@ app.all('*', (req, res, next) => {
   next(new ApiError(`Cant find this route : ${req.originalUrl}`, 400));
 });
 
-//Global error handling middleware
+//Global error handling middleware for express
 app.use(globalError);
 
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`App Running On Port ${PORT}`);
+});
+
+//Handling rejection outside express
+//Events=>lis=>callback(err)
+process.on('unhandledRejection', (err) => {
+  console.error(`UnhandledRejection Errors : ${err}`);
+  server.close(() => {
+    console.error(`Shutting down....`);
+    process.exit(1);
+  });
 });
